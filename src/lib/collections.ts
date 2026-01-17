@@ -4,5 +4,7 @@ export const COLLECTIONS = {
   interactions: 'interactions',
   userProfiles: 'user_profiles',
   popularitySnapshots: 'popularity_snapshots',
-  recommendations: 'recommendations'
+  recommendations: 'recommendations',
+  comments: 'comments',
+  follows: 'follows',
 } as const;

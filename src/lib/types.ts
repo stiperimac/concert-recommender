@@ -80,3 +80,21 @@ export type RecommendationDoc = {
   city?: string;
   items: Array<{ id: string; name: string; score: number; meta?: any }>;
 };
+
+export type CommentDoc = {
+  _id: ObjectId;
+  userId: string;
+  userName?: string;
+  userImage?: string;
+  targetType: 'artist' | 'event';
+  targetId: string;
+  text: string;
+  createdAt: Date;
+};
+
+export type FollowDoc = {
+  _id: ObjectId;
+  followerId: string;
+  followingId: string;
+  createdAt: Date;
+};

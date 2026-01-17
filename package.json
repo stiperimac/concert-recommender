@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "node scripts/seed.mjs",
+    "seed:full": "node scripts/seed-full.mjs",
     "dump": "node scripts/dump.mjs"
   },
   "dependencies": {

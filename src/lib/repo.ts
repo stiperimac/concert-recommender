@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { getMongoClientPromise } from './mongodb';
 import { COLLECTIONS } from './collections';
-import type { ArtistDoc, EventDoc, InteractionDoc, PopularitySnapshotDoc, RecommendationDoc, UserProfileDoc } from './types';
+import type { ArtistDoc, CommentDoc, EventDoc, FollowDoc, InteractionDoc, PopularitySnapshotDoc, RecommendationDoc, UserProfileDoc } from './types';
 
 
 export async function getDb() {
@@ -285,4 +285,129 @@ export async function getEventById(id: string) {
   const db = await getDb();
   const col = db.collection<EventDoc>(COLLECTIONS.events);
   return col.findOne({ _id: new ObjectId(id) });
+}
+
+export async function getUserRecentInteractions(userId: string, limit = 100) {
+  const db = await getDb();
+  const col = db.collection<InteractionDoc>(COLLECTIONS.interactions);
+  const docs = await col.find({ userId }).sort({ createdAt: -1 }).limit(limit).toArray();
+  return docs;
+}
+
+// ============ COMMENTS ============
+
+export async function addComment(input: Omit<CommentDoc, '_id' | 'createdAt'>) {
+  const db = await getDb();
+  const col = db.collection<CommentDoc>(COLLECTIONS.comments);
+  const now = new Date();
+  const doc: CommentDoc = { _id: new ObjectId(), createdAt: now, ...input };
+  await col.insertOne(doc);
+  return doc._id.toHexString();
+}
+
+export async function getCommentsForTarget(targetType: CommentDoc['targetType'], targetId: string, limit = 50) {
+  const db = await getDb();
+  const col = db.collection<CommentDoc>(COLLECTIONS.comments);
+  const docs = await col.find({ targetType, targetId }).sort({ createdAt: -1 }).limit(limit).toArray();
+  return docs.map((d) => ({
+    id: d._id.toHexString(),
+    userId: d.userId,
+    userName: d.userName,
+    userImage: d.userImage,
+    text: d.text,
+    createdAt: d.createdAt.toISOString(),
+  }));
+}
+
+export async function deleteComment(commentId: string, userId: string) {
+  const db = await getDb();
+  const col = db.collection<CommentDoc>(COLLECTIONS.comments);
+  const result = await col.deleteOne({ _id: new ObjectId(commentId), userId });
+  return result.deletedCount > 0;
+}
+
+export async function countCommentsForTarget(targetType: CommentDoc['targetType'], targetId: string) {
+  const db = await getDb();
+  const col = db.collection<CommentDoc>(COLLECTIONS.comments);
+  return col.countDocuments({ targetType, targetId });
+}
+
+// ============ FOLLOWS ============
+
+export async function addFollow(followerId: string, followingId: string) {
+  const db = await getDb();
+  const col = db.collection<FollowDoc>(COLLECTIONS.follows);
+  
+  // Check if already following
+  const existing = await col.findOne({ followerId, followingId });
+  if (existing) return existing._id.toHexString();
+  
+  const now = new Date();
+  const doc: FollowDoc = { _id: new ObjectId(), followerId, followingId, createdAt: now };
+  await col.insertOne(doc);
+  return doc._id.toHexString();
+}
+
+export async function removeFollow(followerId: string, followingId: string) {
+  const db = await getDb();
+  const col = db.collection<FollowDoc>(COLLECTIONS.follows);
+  const result = await col.deleteOne({ followerId, followingId });
+  return result.deletedCount > 0;
+}
+
+export async function getFollowing(userId: string, limit = 100) {
+  const db = await getDb();
+  const col = db.collection<FollowDoc>(COLLECTIONS.follows);
+  const docs = await col.find({ followerId: userId }).sort({ createdAt: -1 }).limit(limit).toArray();
+  return docs.map((d) => d.followingId);
+}
+
+export async function getFollowers(userId: string, limit = 100) {
+  const db = await getDb();
+  const col = db.collection<FollowDoc>(COLLECTIONS.follows);
+  const docs = await col.find({ followingId: userId }).sort({ createdAt: -1 }).limit(limit).toArray();
+  return docs.map((d) => d.followerId);
+}
+
+export async function isFollowing(followerId: string, followingId: string) {
+  const db = await getDb();
+  const col = db.collection<FollowDoc>(COLLECTIONS.follows);
+  const doc = await col.findOne({ followerId, followingId });
+  return Boolean(doc);
+}
+
+export async function countFollowers(userId: string) {
+  const db = await getDb();
+  const col = db.collection<FollowDoc>(COLLECTIONS.follows);
+  return col.countDocuments({ followingId: userId });
+}
+
+export async function countFollowing(userId: string) {
+  const db = await getDb();
+  const col = db.collection<FollowDoc>(COLLECTIONS.follows);
+  return col.countDocuments({ followerId: userId });
+}
+
+// Get recent activity from users that a user is following
+export async function getFollowedUsersActivity(userId: string, limit = 50) {
+  const db = await getDb();
+  const followingIds = await getFollowing(userId, 200);
+  
+  if (followingIds.length === 0) return [];
+  
+  const interactionsCol = db.collection<InteractionDoc>(COLLECTIONS.interactions);
+  const docs = await interactionsCol
+    .find({ userId: { $in: followingIds } })
+    .sort({ createdAt: -1 })
+    .limit(limit)
+    .toArray();
+  
+  return docs.map((d) => ({
+    id: d._id.toHexString(),
+    userId: d.userId,
+    type: d.type,
+    targetType: d.targetType,
+    targetId: d.targetId,
+    createdAt: d.createdAt.toISOString(),
+  }));
 }

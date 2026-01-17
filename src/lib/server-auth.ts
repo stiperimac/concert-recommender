@@ -4,5 +4,11 @@ import { getAuthOptions } from './auth';
 export async function getSessionUser() {
   const session = await getServerSession(getAuthOptions());
   const userId = (session?.user as any)?.id as string | undefined;
-  return { session, userId, email: session?.user?.email || undefined };
+  return {
+    session,
+    userId,
+    email: session?.user?.email || undefined,
+    name: session?.user?.name || undefined,
+    image: session?.user?.image || undefined,
+  };
 }

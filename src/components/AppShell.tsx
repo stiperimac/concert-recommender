@@ -19,6 +19,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             <nav className="flex gap-3 text-sm" aria-label="Primarna navigacija">
               <Link href="/popular" className="hover:underline">Popularno</Link>
               <Link href="/recommendations" className="hover:underline">Preporuke</Link>
+              <Link href="/feed" className="hover:underline">Feed</Link>
               <Link href="/settings" className="hover:underline">Postavke</Link>
             </nav>
           </div>
