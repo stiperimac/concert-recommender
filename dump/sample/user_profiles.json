@@ -1,0 +1,50 @@
+[
+  {
+    "_id": "696a802c3d4e9878ca594c86",
+    "city": "Zagreb",
+    "createdAt": "2026-01-16T18:15:08.717Z",
+    "favoriteArtists": [
+      "Coldplay",
+      "Metallica"
+    ],
+    "onboardingCompleted": true,
+    "updatedAt": "2026-01-16T18:15:08.717Z",
+    "userId": "696a802c3d4e9878ca594c86"
+  },
+  {
+    "_id": "696a802c3d4e9878ca594c87",
+    "city": "Zagreb",
+    "createdAt": "2026-01-16T18:15:08.771Z",
+    "favoriteArtists": [
+      "Coldplay",
+      "Metallica"
+    ],
+    "onboardingCompleted": true,
+    "updatedAt": "2026-01-16T18:15:08.771Z",
+    "userId": "696a802c3d4e9878ca594c87"
+  },
+  {
+    "_id": "696a802c3d4e9878ca594c88",
+    "city": "Zagreb",
+    "createdAt": "2026-01-16T18:15:08.811Z",
+    "favoriteArtists": [
+      "Coldplay",
+      "Metallica"
+    ],
+    "onboardingCompleted": true,
+    "updatedAt": "2026-01-16T18:15:08.811Z",
+    "userId": "696a802c3d4e9878ca594c88"
+  },
+  {
+    "_id": "696a802c3d4e9878ca594c89",
+    "city": "Zagreb",
+    "createdAt": "2026-01-16T18:15:08.852Z",
+    "favoriteArtists": [
+      "Coldplay",
+      "Metallica"
+    ],
+    "onboardingCompleted": true,
+    "updatedAt": "2026-01-16T18:15:08.852Z",
+    "userId": "696a802c3d4e9878ca594c89"
+  }
+]

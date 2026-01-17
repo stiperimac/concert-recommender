@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-scale: 1;
+  --bg: 255 255 255;
+  --fg: 17 24 39; /* gray-900 */
+  --muted: 107 114 128; /* gray-500 */
+  --card: 249 250 251; /* gray-50 */
+  --border: 229 231 235; /* gray-200 */
+  --accent: 59 130 246; /* blue-500 */
+}
+
+:root[data-contrast="high"] {
+  --bg: 0 0 0;
+  --fg: 255 255 255;
+  --muted: 229 231 235;
+  --card: 17 24 39;
+  --border: 255 255 255;
+  --accent: 250 204 21; /* yellow-400 */
+}
+
+html {
+  font-size: calc(16px * var(--font-scale));
+}
+
+body {
+  background: rgb(var(--bg));
+  color: rgb(var(--fg));
+}
+
+a {
+  color: rgb(var(--accent));
+}
+
+/* Accessible focus */
+:focus-visible {
+  outline: 3px solid rgb(var(--accent));
+  outline-offset: 2px;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: rgb(var(--fg));
+  color: rgb(var(--bg));
+  padding: 8px 12px;
+  border-radius: 8px;
+  z-index: 50;
+}
+
+.skip-link:focus {
+  left: 12px;
+  top: 12px;
+}

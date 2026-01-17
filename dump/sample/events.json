@@ -1,0 +1,21 @@
+[
+  {
+    "_id": "696a802c3d4e9878ca594c8a",
+    "tmId": "seed-coldplay-zg",
+    "artists": [
+      "Coldplay"
+    ],
+    "city": "Zagreb",
+    "countryCode": "HR",
+    "createdAt": "2026-01-16T18:15:08.943Z",
+    "date": "2026-02-15",
+    "location": {
+      "lat": 45.777,
+      "lon": 15.941
+    },
+    "name": "Coldplay - Seed Event",
+    "updatedAt": "2026-01-16T18:15:08.943Z",
+    "url": "https://example.com",
+    "venue": "Arena Zagreb"
+  }
+]

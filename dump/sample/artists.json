@@ -1,0 +1,27 @@
+[
+  {
+    "_id": "000000000000000000000001",
+    "normalizedName": "coldplay",
+    "createdAt": "2026-01-16T18:15:08.892Z",
+    "genres": [
+      "pop",
+      "rock"
+    ],
+    "name": "Coldplay",
+    "signals": {
+      "spotify": {
+        "popularity": 90,
+        "followers": 35000000,
+        "genres": [
+          "pop",
+          "rock"
+        ]
+      },
+      "lastfm": {
+        "listeners": 12000000,
+        "playcount": 900000000
+      }
+    },
+    "updatedAt": "2026-01-16T18:15:08.892Z"
+  }
+]
