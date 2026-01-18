@@ -318,7 +318,7 @@ export async function computeRecommendations({
         } else if (w.precipitation > 5) {
           r.score -= 10;
           r.meta.reason = [...(r.meta.reason || []), 'Moguće oborine (-10)'];
-        } else if (w.precipitation < 1 && w.temp && w.temp > 15 && w.temp < 28) {
+        } else if (w.precipitation < 1 && w.tempMax && w.tempMax > 15 && w.tempMax < 28) {
           r.score += 10;
           r.meta.reason = [...(r.meta.reason || []), 'Odlično vrijeme za koncert (+10)'];
         }

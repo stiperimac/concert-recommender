@@ -260,7 +260,7 @@ export default function HomeDashboard() {
         </section>
       </div>
 
-      {/* Quick Stats */}
+      {}
       <section className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="rounded-xl border p-4 text-center" style={{ borderColor: 'rgb(var(--border))', background: 'rgb(var(--card))' }}>
           <p className="text-3xl font-bold" style={{ color: 'rgb(var(--accent))' }}>

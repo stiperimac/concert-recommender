@@ -44,7 +44,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       <footer className="mt-12 border-t" style={{ borderColor: 'rgb(var(--border))' }}>
         <div className="mx-auto max-w-5xl px-4 py-8 text-sm" style={{ color: 'rgb(var(--muted))' }}>
           <p>
-            Projekt: profil sadržaja, popularnost i personalizirane preporuke (Next.js + MongoDB).
+            
           </p>
         </div>
       </footer>

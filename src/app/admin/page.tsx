@@ -66,12 +66,12 @@ export default function AdminPage() {
         <h1 className="text-2xl font-semibold">Admin Dashboard</h1>
         <p className="text-sm" style={{ color: 'rgb(var(--muted))' }}>
           Upravljanje sadržajem i osvježavanje podataka iz vanjskih izvora.
-          Pristup je ograničen na admin korisnike (definirane u ADMIN_EMAILS env varijabli).
+          Pristup je ograničen na admin korisnike.
         </p>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Batch Ingest */}
+        {}
         <section className="rounded-2xl border p-6" style={{ borderColor: 'rgb(var(--border))', background: 'rgb(var(--card))' }}>
           <h2 className="text-lg font-semibold mb-2">Batch uvoz izvođača</h2>
           <p className="text-xs mb-4" style={{ color: 'rgb(var(--muted))' }}>
@@ -263,21 +263,16 @@ export default function AdminPage() {
         </section>
       )}
 
-      {/* Documentation */}
+      {}
       <section className="rounded-2xl border p-6" style={{ borderColor: 'rgb(var(--border))', background: 'rgb(var(--card))' }}>
-        <h2 className="text-lg font-semibold mb-2">Cron / Automatsko osvježavanje</h2>
+        <h2 className="text-lg font-semibold mb-2"></h2>
         <p className="text-sm" style={{ color: 'rgb(var(--muted))' }}>
-          Za automatsko periodičko osvježavanje, možeš postaviti cron job (npr. u Vercel-u ili preko external schedulera)
-          koji poziva ove API endpointe:
+          
         </p>
         <ul className="mt-3 space-y-2 text-sm font-mono" style={{ color: 'rgb(var(--muted))' }}>
-          <li>POST /api/admin/refresh {`{ "action": "refresh_artists" }`}</li>
-          <li>POST /api/admin/refresh {`{ "action": "refresh_events", "city": "Zagreb" }`}</li>
-          <li>POST /api/admin/refresh {`{ "action": "regenerate_popularity" }`}</li>
-        </ul>
+          </ul>
         <p className="text-xs mt-3" style={{ color: 'rgb(var(--muted))' }}>
-          Napomena: Endpointi zahtijevaju autentifikaciju i admin prava (email u ADMIN_EMAILS env varijabli).
-        </p>
+         </p>
       </section>
     </div>
   );

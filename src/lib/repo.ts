@@ -159,18 +159,33 @@ export async function ensureUserProfile(userId: string) {
   return doc;
 }
 
-export async function updateUserProfile(userId: string, patch: Partial<Pick<UserProfileDoc, 'city' | 'favoriteArtists' | 'onboardingCompleted'>>) {
+export async function updateUserProfile(
+  userId: string,
+  patch: Partial<Pick<UserProfileDoc, "city" | "favoriteArtists" | "onboardingCompleted">>
+) {
   const db = await getDb();
   const col = db.collection<UserProfileDoc>(COLLECTIONS.userProfiles);
   const now = new Date();
 
-  await col.updateOne(
-    { _id: userId },
-    { $set: { ...patch, updatedAt: now }, $setOnInsert: { createdAt: now, userId, favoriteArtists: [], onboardingCompleted: false } },
-    { upsert: true }
+  // sastavi $set samo s poljima koja su stvarno poslana
+  const $set: Partial<UserProfileDoc> & { updatedAt: Date } = {
+    updatedAt: now,
+  };
+
+  if (typeof patch.city === "string") $set.city = patch.city;
+  if (Array.isArray(patch.favoriteArtists)) $set.favoriteArtists = patch.favoriteArtists;
+  if (typeof patch.onboardingCompleted === "boolean") $set.onboardingCompleted = patch.onboardingCompleted;
+
+  const res = await col.findOneAndUpdate(
+    { userId },
+    {
+      $set,
+      $setOnInsert: { userId, createdAt: now },
+    },
+    { upsert: true, returnDocument: "after" }
   );
 
-  return col.findOne({ _id: userId });
+  return res.value!;
 }
 
 export async function addInteraction(input: Omit<InteractionDoc, '_id' | 'createdAt'>) {
